@@ -3,8 +3,8 @@
 
 using System.Text.Json;
 using Rulealize.Abstraction.Building;
-using Rulealize.Abstraction.Nodes;
-using Rulealize.Abstraction.Values;
+using Rulealize.Abstraction.Node;
+using Rulealize.Abstraction.Value;
 
 namespace Rulealize.Plugin.Grid
 {
@@ -41,38 +41,8 @@ namespace Rulealize.Plugin.Grid
         /// <inheritdoc />
         public override bool IsNullable => false;
 
-        public static SchemaNode Build(INodeBuildContext context)
-        {
-            int width = context.RequireInt32("width");
-            int height = context.RequireInt32("height");
-
-            if (width < 1)
-            {
-                throw context.Error("width", $"must be at least 1, but is {width}.");
-            }
-
-            if (height < 1)
-            {
-                throw context.Error("height", $"must be at least 1, but is {height}.");
-            }
-
-            string notationText = context.OptionalString("coord") ?? "index";
-            CoordinateNotation notation = notationText switch
-            {
-                "index" => CoordinateNotation.Index,
-                "algebraic" => CoordinateNotation.Algebraic,
-                _ => throw context.Error("coord", $"'{notationText}' is not one of index, algebraic.")
-            };
-
-            if (notation == CoordinateNotation.Algebraic && width > 26)
-            {
-                throw context.Error(
-                    "coord",
-                    $"algebraic notation has one letter per column, so it cannot describe {width} of them.");
-            }
-
-            return new BoardSchemaNode(new BoardGeometry(width, height, notation), context.RequireSchema("cell"));
-        }
+        public static SchemaNode Build(INodeBuildContext context) =>
+            new BoardSchemaNode(DeclaredGeometry.Read(context), context.RequireSchema("cell"));
 
         /// <inheritdoc />
         public override void Validate(RuleValue value, ISchemaValidationSink sink)

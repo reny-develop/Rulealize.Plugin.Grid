@@ -23,13 +23,40 @@ The only plugin in the standard set that provides all three kinds of node.
 | Operation | Kind | Shape |
 | --- | --- | --- |
 | `grid.board` | schema | `{ "op": "grid.board", "width": …, "height": …, "coord": "…", "cell": <schema> }` |
+| `grid.square` | schema | `{ "op": "grid.square", "width": …, "height": …, "coord": "…", "nullable": … }` |
 | `grid.at` | expression | `{ "op": "grid.at", "grid": …, "coord": … }` |
 | `grid.coords` | expression | `{ "op": "grid.coords", "of": … }` |
 | `grid.cells` | expression | `{ "op": "grid.cells", "of": … }` |
 | `grid.ray` | expression | `{ "op": "grid.ray", "grid": …, "from": …, "dir": …, "length": … }` |
 | `grid.directions` | expression | `{ "op": "grid.directions", "of": …, "kind": "eight" }` |
+| `grid.with` | expression | `{ "op": "grid.with", "grid": …, "coord": …, "value": … }` |
+| `grid.withMany` | expression | `{ "op": "grid.withMany", "grid": …, "coords": …, "value": … }` |
 | `grid.set` | effect | `{ "op": "grid.set", "target": …, "coord": …, "value": … }` |
 | `grid.setMany` | effect | `{ "op": "grid.setMany", "target": …, "coords": …, "value": … }` |
+
+`grid.with` and `grid.withMany` write nothing. They take a board and return another, leaving
+the one they were given alone, and they exist because a guard cannot see the position a move
+would produce: `when` is evaluated against the state as it is, and effects run only after it
+passes. That is the right way round for Othello, whose legality is a property of the position
+in front of it, and the wrong way round for chess, where a move is illegal exactly when the
+position after it leaves its own king attacked. A rule set that can build the resulting board
+as a value can ask the question of it.
+
+They answer it for a board, which is one value in one field. A rule whose legality depends on
+the whole state after a move is still out of reach and would need something from the runtime
+rather than from here.
+
+`grid.square` describes a field holding a single square, written in the board's own notation:
+
+```jsonc
+"passed": { "op": "grid.square", "width": 8, "height": 8, "coord": "algebraic", "nullable": true }
+```
+
+Without it the state has nowhere to keep a coordinate. Kept as text it can still be handed to
+`grid.at`, which reads both forms, but it can no longer be compared with one that came out of
+`grid.coords`, because text and an opaque coordinate are different kinds and the value model
+holds different kinds to be unequal. Chess needs exactly one such field — the square a pawn
+skipped over, which the next move may capture on.
 
 Two opaque types come with them: `grid/coord`, written the way the board's notation says,
 and `grid/direction`, written `"<dx>,<dy>"`.

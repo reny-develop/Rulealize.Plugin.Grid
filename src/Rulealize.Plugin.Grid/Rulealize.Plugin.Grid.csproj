@@ -14,9 +14,9 @@
 
   <PropertyGroup>
     <PackageId>Rulealize.Plugin.Grid</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Reny</Authors>
-    <Description>Two-dimensional boards, coordinates, directions and ray traversal for Rulealize rule sets.</Description>
+    <Description>Two-dimensional boards, coordinates, directions, ray traversal and functional board update for Rulealize rule sets.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/reny-develop/Rulealize.Plugin.Grid</RepositoryUrl>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rulealize.Abstraction" Version="0.1.0" />
+    <PackageReference Include="Rulealize.Abstraction" Version="0.3.0" />
   </ItemGroup>
 
 </Project>

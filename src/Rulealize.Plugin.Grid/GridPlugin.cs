@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Reny
 // Licensed under the Apache License, Version 2.0.
 
-using Rulealize.Abstraction.Plugins;
+using Rulealize.Abstraction.Plugin;
 
 namespace Rulealize.Plugin.Grid
 {
@@ -25,7 +25,7 @@ namespace Rulealize.Plugin.Grid
     {
         /// <inheritdoc />
         public PluginManifest Manifest { get; } =
-            new("Rulealize.Plugin.Grid", new Version(1, 0, 0), "grid");
+            new("Rulealize.Plugin.Grid", new Version(1, 1, 0), "grid");
 
         /// <inheritdoc />
         public void Register(IPluginRegistry registry)
@@ -33,11 +33,14 @@ namespace Rulealize.Plugin.Grid
             ArgumentNullException.ThrowIfNull(registry);
 
             registry.AddSchema("board", BoardSchemaNode.Build);
+            registry.AddSchema("square", SquareSchemaNode.Build);
             registry.AddExpression("at", AtNode.Build);
             registry.AddExpression("coords", CoordsNode.Build);
             registry.AddExpression("cells", CellsNode.Build);
             registry.AddExpression("ray", RayNode.Build);
             registry.AddExpression("directions", DirectionsNode.Build);
+            registry.AddExpression("with", WithNode.Build);
+            registry.AddExpression("withMany", WithManyNode.Build);
             registry.AddEffect("set", SetNode.Build);
             registry.AddEffect("setMany", SetManyNode.Build);
         }

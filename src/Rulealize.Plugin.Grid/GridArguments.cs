@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0.
 
 using Rulealize.Abstraction;
-using Rulealize.Abstraction.Values;
+using Rulealize.Abstraction.Value;
 
 namespace Rulealize.Plugin.Grid
 {
@@ -23,10 +23,10 @@ namespace Rulealize.Plugin.Grid
     /// <remarks>
     /// <para>
     /// A coordinate arrives in either of two forms, and both are accepted. Opaque, when it
-    /// came from <c>grid.coords</c> or <c>grid.ray</c>; text, when it came from an input
-    /// document's arguments and was written in the board's notation. That double acceptance
-    /// is what allows a parameter domain to enumerate opaque coordinates while an input is
-    /// still written <c>{ "at": "d3" }</c>.
+    /// came from <c>grid.coords</c> or <c>grid.ray</c>; text, when a rule set wrote a square
+    /// out — <c>"e1"</c>, where castling starts. That double acceptance is also what lets a
+    /// runtime recognise <c>{ "at": "d3" }</c> in an input document as the coordinate a
+    /// domain produced, since the text it matches on is the one this plugin defines.
     /// </para>
     /// <para>
     /// Text that does not parse is an evaluation error — the rule set said something that
