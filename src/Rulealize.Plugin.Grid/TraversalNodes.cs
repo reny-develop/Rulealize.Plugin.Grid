@@ -26,7 +26,7 @@ namespace Rulealize.Plugin.Grid
     /// so that rays out of a computed square need no guard.
     /// </para>
     /// <para>
-    /// The result is walked more than once in practice — Othello takes a prefix of a ray and
+    /// The result is walked more than once in practice — Reversi takes a prefix of a ray and
     /// then indexes into the same ray — so it is re-enumerable, as every sequence must be.
     /// </para>
     /// </remarks>
@@ -99,7 +99,7 @@ namespace Rulealize.Plugin.Grid
     /// <para>
     /// The board is taken as an argument so that the directions returned agree with its
     /// axes. There is no way to name one direction on its own yet; a rule that needs
-    /// "forwards" for a piece cannot express it. Othello does not care, because it treats
+    /// "forwards" for a piece cannot express it. Reversi does not care, because it treats
     /// all eight alike.
     /// </para>
     /// </remarks>

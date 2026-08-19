@@ -15,7 +15,7 @@ Two-dimensional boards, coordinates, directions and ray traversal for
 `directions`, `with` and `withMany` are expressions; `grid.set` and `grid.setMany` are
 effects. The only plugin in the standard set that provides all three kinds of node.
 
-**There is no Othello in here.** Capturing and flipping are not concepts this plugin has;
+**There is no Reversi in here.** Capturing and flipping are not concepts this plugin has;
 a rule set assembles them out of a ray and a take-while. Whether that boundary holds is the
 test of whether the plugin decomposition works at all, and the same vocabulary should
 describe five-in-a-row, draughts, or a cellular automaton. Chess and shogi would need

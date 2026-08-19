@@ -15,7 +15,7 @@ namespace Rulealize.Plugin.Grid
     /// a null coordinate. That collapse is the most consequential decision in this plugin.
     /// </para>
     /// <para>
-    /// Othello's capture rule reads the square just past a run of opposing stones. When the
+    /// Reversi's capture rule reads the square just past a run of opposing stones. When the
     /// run reaches the edge, the index is past the end of the ray, so the coordinate is null,
     /// so this answers null, so the equality test against the mover's colour answers false,
     /// so the run is not a capture. Correct, and nowhere in the rule set does anyone write a
@@ -54,7 +54,7 @@ namespace Rulealize.Plugin.Grid
     /// which run it was.
     /// </para>
     /// <para>
-    /// This is where candidate generation starts. Othello's placement takes one coordinate
+    /// This is where candidate generation starts. Reversi's placement takes one coordinate
     /// parameter whose domain is this sequence, giving sixty-four candidates for the guard
     /// to sift.
     /// </para>

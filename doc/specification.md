@@ -16,8 +16,8 @@ Grid has; the rule set builds them out of `grid.ray` and `seq.takeWhile`. Whethe
 boundary holds is the measure of whether the plugin design is sound.
 
 The same Grid should describe gomoku (`grid.ray` plus a run length), draughts, and the game
-of life. [Chess was written with the 1.1 additions](https://github.com/reny-develop/Rulealize/blob/main/doc/dsl-example-chess.md) — promotion
-and captured pieces needed no dedicated plugin, only a way to build a new board as a value.
+of life. Chess was written with the 1.1 additions — promotion and captured pieces needed no
+dedicated plugin, only a way to build a new board as a value.
 
 **The only plugin that provides all three kinds of node.**
 

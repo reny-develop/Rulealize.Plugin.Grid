@@ -17,7 +17,7 @@ namespace Rulealize.Plugin.Grid
     /// <para>
     /// This exists because a guard cannot see the position a move would produce. An input's
     /// <c>when</c> is evaluated against the state as it is, and effects run only once the
-    /// guard has passed — which is the right way round for Othello, whose legality is a
+    /// guard has passed — which is the right way round for Reversi, whose legality is a
     /// property of the position in front of it, but not for chess, where a move is illegal
     /// precisely when the position after it leaves its own king attacked. A rule set that can
     /// build the resulting board as a value can ask that question of it.

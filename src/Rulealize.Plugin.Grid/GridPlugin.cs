@@ -11,7 +11,7 @@ namespace Rulealize.Plugin.Grid
     /// </summary>
     /// <remarks>
     /// <para>
-    /// There is no Othello here. Capturing and flipping are not concepts this plugin has;
+    /// There is no Reversi here. Capturing and flipping are not concepts this plugin has;
     /// a rule set builds them out of a ray and a take-while. Whether that boundary holds is
     /// the test of whether the plugin decomposition works at all, and it does: the same
     /// vocabulary should describe five-in-a-row, draughts, or a cellular automaton.

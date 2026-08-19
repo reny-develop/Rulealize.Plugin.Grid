@@ -17,7 +17,7 @@ namespace Rulealize.Plugin.Grid
     /// The board is read from the draft rather than from the snapshot, so that two effects
     /// writing to the same board add up. The coordinate and the value are evaluated against
     /// the snapshot, so what they compute is unaffected by whatever the earlier effect did.
-    /// Othello relies on both halves at once: placing a stone and flipping the captured ones
+    /// Reversi relies on both halves at once: placing a stone and flipping the captured ones
     /// are separate effects on one board, and the set of captured stones is worked out from
     /// the position as it was before the stone went down.
     /// </para>
@@ -61,7 +61,7 @@ namespace Rulealize.Plugin.Grid
     /// node.
     /// </para>
     /// <para>
-    /// An empty sequence of coordinates does nothing. Othello's flip effect gets one
+    /// An empty sequence of coordinates does nothing. Reversi's flip effect gets one
     /// whenever a move captures in no direction — which, given that the guard has already
     /// established the move is legal, does not happen, but the rule set does not have to
     /// know that.
