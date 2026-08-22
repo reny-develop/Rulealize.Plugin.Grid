@@ -120,6 +120,6 @@ namespace Rulealize.Plugin.Grid
 
         /// <inheritdoc />
         public override string ToString() =>
-            $"{width.ToString(CultureInfo.InvariantCulture)}×{height.ToString(CultureInfo.InvariantCulture)} ({NotationName})";
+            $"{width.ToString(CultureInfo.InvariantCulture)}x{height.ToString(CultureInfo.InvariantCulture)} ({NotationName})";
     }
 }
