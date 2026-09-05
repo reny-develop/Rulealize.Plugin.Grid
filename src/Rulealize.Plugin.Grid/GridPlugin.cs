@@ -25,7 +25,7 @@ namespace Rulealize.Plugin.Grid
     {
         /// <inheritdoc />
         public PluginManifest Manifest { get; } =
-            new("Rulealize.Plugin.Grid", new Version(1, 1, 1), "grid");
+            new("Rulealize.Plugin.Grid", new Version(1, 1, 2), "grid");
 
         /// <inheritdoc />
         public void Register(IPluginRegistry registry)
