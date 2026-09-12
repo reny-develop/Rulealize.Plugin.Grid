@@ -393,7 +393,7 @@ Writes one square.
 ```jsonc
 {
   "op": "grid.set",
-  "target": <expression:board>,
+  "target": <state field:board>,
   "coord": <expression:coord>,
   "value": <expression>
 }
@@ -406,9 +406,13 @@ Writes one square.
 1. `target`, `coord` and `value` are evaluated **against the snapshot**.
 2. `value` is written to `coord` of that board in the draft.
 
-`target` is the expression naming the board to write to, in practice a `state.get` such as
-`$board`. It is matched against the State plugin's path to work out where in the draft the
-write lands.
+`target` has to denote a state field holding a board — written `"$board"`, and refused at
+build time otherwise with `must denote a state field, such as "$board".` It is matched
+against the State plugin's path to work out where in the draft the write lands.
+
+This is the one place in this vocabulary where a computed board will not do. Everything that
+only reads a board takes `<expression:board>`, so `grid.with` can hand one straight to
+`grid.at`; a write has to land somewhere, and only a field is somewhere.
 
 ### Off the board and `Null` coordinates
 
@@ -432,7 +436,7 @@ Writes one value to several squares.
 ```jsonc
 {
   "op": "grid.setMany",
-  "target": <expression:board>,
+  "target": <state field:board>,
   "coords": <expression:Sequence>,
   "value": <expression>
 }
