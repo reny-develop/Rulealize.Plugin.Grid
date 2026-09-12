@@ -62,6 +62,18 @@ be written, and that is a question for the runtime rather than for this plugin.
 
 ### `grid.square`
 
+#### Form
+
+```jsonc
+{
+  "op": "grid.square",
+  "width": <integer>,
+  "height": <integer>,
+  "coord": "<notation>",   // optional, one of "index", "algebraic"; default "index"
+  "nullable": <boolean>    // optional, default false
+}
+```
+
 ```jsonc
 { "op": "grid.square", "width": 8, "height": 8, "coord": "algebraic", "nullable": true }
 ```
