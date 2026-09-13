@@ -121,6 +121,17 @@ namespace Rulealize.Plugin.Grid
             new DirectionValue(1, 1)
         ];
 
+        // One per line rather than one per direction: a line reaches both ways from a square,
+        // so a rule asking about lines wants four answers and not eight. Added for `grid.run`,
+        // which gives the same answer for a direction and its opposite.
+        private static readonly ImmutableArray<RuleValue> Axis =
+        [
+            new DirectionValue(1, 0),
+            new DirectionValue(0, 1),
+            new DirectionValue(1, 1),
+            new DirectionValue(1, -1)
+        ];
+
         private static readonly ImmutableArray<RuleValue> Eight =
         [
             new DirectionValue(-1, -1),
@@ -141,7 +152,8 @@ namespace Rulealize.Plugin.Grid
                 "orthogonal" => Orthogonal,
                 "diagonal" => Diagonal,
                 "eight" => Eight,
-                _ => throw context.Error("kind", $"'{kind}' is not one of orthogonal, diagonal, eight.")
+                "axis" => Axis,
+                _ => throw context.Error("kind", $"'{kind}' is not one of orthogonal, diagonal, eight, axis.")
             };
 
             return new DirectionsNode(context.RequireExpression("of"), directions);

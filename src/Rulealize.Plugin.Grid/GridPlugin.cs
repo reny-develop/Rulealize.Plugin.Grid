@@ -25,7 +25,7 @@ namespace Rulealize.Plugin.Grid
     {
         /// <inheritdoc />
         public PluginManifest Manifest { get; } =
-            new("Rulealize.Plugin.Grid", new Version(1, 1, 2), "grid");
+            new("Rulealize.Plugin.Grid", new Version(1, 2, 0), "grid");
 
         /// <inheritdoc />
         public void Register(IPluginRegistry registry)
@@ -39,6 +39,7 @@ namespace Rulealize.Plugin.Grid
             registry.AddExpression("cells", CellsNode.Build);
             registry.AddExpression("ray", RayNode.Build);
             registry.AddExpression("directions", DirectionsNode.Build);
+            registry.AddExpression("run", RunNode.Build);
             registry.AddExpression("with", WithNode.Build);
             registry.AddExpression("withMany", WithManyNode.Build);
             registry.AddEffect("set", SetNode.Build);

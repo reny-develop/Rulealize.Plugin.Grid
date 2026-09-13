@@ -4,7 +4,7 @@
 | --- | --- |
 | Identifier | `Rulealize.Plugin.Grid` |
 | Namespace | `grid` |
-| Version | `1.1.2` |
+| Version | `1.2.0` |
 | Reserved prefix | none |
 | Depends on | [the value model](https://github.com/reny-develop/Rulealize.Abstraction/blob/main/doc/value-model.md), and nothing else |
 | Notation | [how a plugin specification is written](https://github.com/reny-develop/Rulealize.Abstraction/blob/main/doc/specification-notation.md) |
@@ -15,8 +15,10 @@ Two-dimensional boards, coordinates, directions, and rays.
 Grid has; the rule set builds them out of `grid.ray` and `seq.takeWhile`. Whether that
 boundary holds is the measure of whether the plugin design is sound.
 
-The same Grid should describe gomoku (`grid.ray` plus a run length), draughts, and the game
-of life. Chess was written with the 1.1 additions — promotion and captured pieces needed no
+The same Grid describes gomoku, draughts, and the game of life. Gomoku was left to
+`grid.ray` plus a run length until 1.2, and that is what `grid.run` is: the same answer,
+without the two definitions and the four clauses every board of marks was writing out.
+Chess was written with the 1.1 additions — promotion and captured pieces needed no
 dedicated plugin, only a way to build a new board as a value.
 
 **The only plugin that provides all three kinds of node.**
@@ -32,10 +34,74 @@ dedicated plugin, only a way to build a new board as a value.
 | `grid.cells` | expression | ○ `terminal.result` |
 | `grid.ray` | expression | ○ `flips1` |
 | `grid.directions` | expression | ○ `flips` |
+| `grid.run` | expression | — (added in 1.2) |
 | `grid.with` | expression | — (added in 1.1) |
 | `grid.withMany` | expression | — (added in 1.1) |
 | `grid.set` | effect | ○ `inputs.place` |
 | `grid.setMany` | effect | ○ `inputs.place` |
+
+## What 1.2 added
+
+### `grid.run`
+
+#### Form
+
+```jsonc
+{
+  "op": "grid.run",
+  "grid": <expression:board>,
+  "from": <expression:coord>,
+  "axis": <expression:direction>,
+  "value": <expression>
+}
+```
+
+**How long a line of `value` through `from` is, counting `from` as one of them.** The square
+itself is not read: the walk starts one step out, both ways along the axis, and stops at the
+first square that is not `value` or off the board. A direction and its opposite give the same
+answer.
+
+`from` off the board or `Null` gives `0`.
+
+#### Why the square itself is not read
+
+The question a guard asks is what a move **would** make, and the piece is not on the board
+when the guard asks. It is not there during the effects either — those read the snapshot —
+so a rule set can place the piece and decide the game in the same input, in either order:
+
+```jsonc
+"effects": [
+  { "op": "grid.set", "target": "$board", "coord": "@at", "value": "#me" },
+  { "op": "state.set", "path": "winner", "value": {
+      "op": "branch.if", "cond": "#aligned", "then": "#me" } }
+]
+```
+
+This is the same judgement `grid.ray` makes about excluding its origin, for the same reason.
+
+#### Example (three in a row, whole rule)
+
+```jsonc
+"aligned": {
+  "params": ["at"],
+  "body": { "op": "seq.any",
+    "source": { "op": "grid.directions", "of": "$board", "kind": "axis" }, "as": "d",
+    "predicate": { "op": "cmp.gte", "right": 3, "left":
+      { "op": "grid.run", "grid": "$board", "from": "@at", "axis": "@d", "value": "#me" } } }
+}
+```
+
+Written with `grid.ray` and `seq.takeWhile` the same rule is two more definitions and one
+clause per axis — **forty-three lines against six** — and the length of it does not depend
+on the rule, so every board of marks was writing the same forty-three.
+
+### `grid.directions` gained `kind: "axis"`
+
+Four directions, one per line: `1,0`, `0,1`, `1,1`, `1,-1`. `"eight"` returns a direction
+and its opposite as two elements, which is right for looking outward and wrong for asking
+about lines — a rule using `grid.run` over `"eight"` gets every answer twice.
+
+---
 
 ## What 1.1 added
 
